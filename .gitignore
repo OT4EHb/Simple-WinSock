@@ -1,4 +1,5 @@
 ﻿/.vs
+/x64
 /Simple WinSock.vcxproj.user
 *.sln
 *.vcxproj
