@@ -1,25 +1,25 @@
 #include "WSStart.hpp"
 
 WSStart::WSStart(int major, int minor) {
+	SetConsoleOutputCP(CP_UTF8);
 	if (WSAStartup(MAKEWORD(major, minor), &ws)) {
-		throw std::runtime_error("Error WinSock init, code "
-								 + std::to_string(WSAGetLastError()));
+		throw WSError("Ошибка при инизиализации библиотеки");
 	}
 #ifdef WSDEBUG
-	std::wcout << L"Запущена библиотека версии " <<
-		HIBYTE(ws.wVersion) << L'.' <<
-		LOBYTE(ws.wVersion) << std::endl;
+	std::cout << "Запущена библиотека версии " <<
+		static_cast<int>HIBYTE(ws.wVersion) << '.' <<
+		static_cast<int>LOBYTE(ws.wVersion) << std::endl;
 #endif
 }
 
 WSStart::~WSStart() {
 	WSACleanup();
 #ifdef WSDEBUG
-	std::wcout << L"Библиотека отключена\n";
+	std::cout << "Библиотека отключена\n";
 #endif
 }
 
-WSStart & WSStart::init() {
-	static WSStart st{};
+WSStart &WSStart::init(int major, int minor) {
+	static WSStart st{major, minor};
 	return st;
 }

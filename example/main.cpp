@@ -1,12 +1,15 @@
-#include "WSStart.hpp"
-#include <io.h>
-#include <fcntl.h>
+#include "Socket.hpp"
 
-using std::wcout;
-
-int wmain() {
-	_setmode(_fileno(stdout), _O_U16TEXT);
-	_setmode(_fileno(stdin), _O_U16TEXT);
-	WSStart::init();
+int main() {
+	try {
+		WSStart::init();
+		Socket sk{"localhost"};
+		sk.bind();
+	}
+	catch(WSError&e){
+		std::cout << e.what() << std::endl;
+	}
+	std::cout << "Нажмите Enter";
+	std::getchar();
 	return 0;
 }

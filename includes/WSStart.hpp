@@ -1,10 +1,8 @@
 #pragma once
 
 #include "WSconfig.hpp"
-#include <WinSock2.h>
-#pragma comment(lib,"Ws2_32.lib")
-#include <stdexcept>
-#include <string>
+#include "WSError.hpp"
+#pragma comment(lib, "Ws2_32.lib")
 #ifdef WSDEBUG
 #include <iostream>
 #endif
@@ -13,8 +11,8 @@
 class WSStart {
 private:
 	WSADATA ws;
-	WSStart(int major = 2, int minor = 2);
+	WSStart(int major, int minor);
 	~WSStart();
 public:
-	static WSStart &init();
+	static WSStart &init(int major = 2, int minor = 2);
 };
