@@ -2,10 +2,8 @@
 
 #include "WSconfig.hpp"
 #include "WSError.hpp"
-#pragma comment(lib, "Ws2_32.lib")
-#ifdef WSDEBUG
 #include <iostream>
-#endif
+#pragma comment(lib, "Ws2_32.lib")
 
 //ПАТТЕРН ОДИНОЧКА ПО САМУСЕВУ
 class WSStart {

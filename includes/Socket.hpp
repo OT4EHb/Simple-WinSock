@@ -10,8 +10,7 @@ protected:
 	sockaddr saddr;
 	Socket();
 public:
-	Socket(std::string hoststr, std::string port = "80",
-		   int type = SOCK_STREAM, int af = AF_INET);
+	Socket(std::string hoststr, std::string port, int type, int af);
 	~Socket() noexcept;
 	Socket(Socket &sk); //На случай копирования/не сработает NRVO
 	Socket &operator=(const Socket &) = delete;
