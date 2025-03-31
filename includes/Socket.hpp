@@ -9,6 +9,7 @@ protected:
 	addrinfo sinfo;
 	sockaddr saddr;
 	Socket();
+	void setInfo(std::string hoststr, std::string port, int type, int af);
 public:
 	Socket(std::string hoststr, std::string port, int type, int af);
 	~Socket() noexcept;

@@ -1,11 +1,11 @@
-#include "TCPsock.hpp"
+#include "UDPsock.hpp"
 
 int main() {
 	try {
 		WSStart::init();
-		TCPsock sk{"localhost"};
-		char buff[100]{0};
-		sk.connect();
+		UDPsock sk{"127.0.0.1"};
+		char buff[100]{"Полезная информация\n"};
+		sk.send(buff, 100);
 		sk.recv(buff, 100);
 		std::cout << buff;
 	}

@@ -1,17 +1,13 @@
 #include "Socket.hpp"
 
-Socket::Socket() :sock(0) {
-	ZeroMemory(&sinfo, sizeof(sinfo));
-	ZeroMemory(&saddr, sizeof(saddr));
+Socket::Socket() {
+	ZeroMemory(this, sizeof(Socket));
+	sock = INVALID_SOCKET;
 	sinfo.ai_addr = &saddr;
 	sinfo.ai_addrlen = sizeof(saddr);
 }
 
-Socket::Socket(std::string hoststr, std::string port, int type, int af) :
-	sock(socket(af, type, 0)) {
-	if (sock == INVALID_SOCKET) {
-		throw WSError("Ошибка при создании сокета");
-	}
+void Socket::setInfo(std::string hoststr, std::string port, int type, int af) {
 	addrinfo hints, *result = nullptr;
 	ZeroMemory(&hints, sizeof(hints));
 	hints.ai_family = af;
@@ -22,6 +18,14 @@ Socket::Socket(std::string hoststr, std::string port, int type, int af) :
 	memcpy(&sinfo, result, sizeof(*result));
 	memcpy(&saddr, sinfo.ai_addr, sizeof(sinfo.ai_addr));
 	sinfo.ai_addr = &saddr;
+}
+
+Socket::Socket(std::string hoststr, std::string port, int type, int af) :
+	sock(socket(af, type, 0)) {
+	if (sock == INVALID_SOCKET) {
+		throw WSError("Ошибка при создании сокета");
+	}
+	setInfo(std::move(hoststr), std::move(port), type, af);
 #ifdef WSDEBUG
 	std::cout << "Открытие сокета\n";
 #endif
@@ -37,7 +41,6 @@ Socket::Socket(Socket &sk)  {
 	memcpy(this, &sk, sizeof(Socket));
 	sinfo.ai_addr = &saddr;
 	sk.sock = INVALID_SOCKET;
-	sk.sinfo.ai_addr = nullptr;
 }
 
 void Socket::bind() const {
