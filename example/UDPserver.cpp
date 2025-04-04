@@ -1,4 +1,4 @@
-#include "UDPsock.hpp"
+#include <UDPsock.hpp>
 
 int main() {
 	try {
@@ -14,7 +14,10 @@ int main() {
 	catch (WSError &e) {
 		std::cerr << e.what() << std::endl;
 	}
+	catch (...) {
+		throw;
+	}
 	std::cout << "Нажмите Enter";
-	std::getchar();
+	_getwch();
 	return 0;
 }

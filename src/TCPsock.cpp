@@ -1,4 +1,4 @@
-#include "TCPsock.hpp"
+#include <TCPsock.hpp>
 
 void TCPsock::listen(int backlog) {
 	if (::listen(sock, backlog)) {
@@ -15,11 +15,8 @@ TCPsock TCPsock::accept() {
 	if (sk.sock == INVALID_SOCKET) {
 		throw WSError("Ошибка при принятии клиента");
 	}
-	char clientIP[INET6_ADDRSTRLEN];
-	//величайший костыль
-	inet_ntop(sk.sinfo.ai_family, reinterpret_cast<char *>(sk.sinfo.ai_addr) + 4,
-			  clientIP, INET6_ADDRSTRLEN);
-	std::cout << "Подключен клиент с IP " << clientIP << std::endl;
+	std::cout << "Подключен клиент:\n";
+	sk.getInfo();
 	return sk;
 }
 

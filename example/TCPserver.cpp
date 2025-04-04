@@ -1,9 +1,9 @@
-#include "TCPsock.hpp"
+#include <TCPsock.hpp>
 
 int main() {
 	try {
 		WSStart::init();
-		TCPsock sk{"localhost"};
+		TCPsock sk{""};
 		sk.bind();
 		sk.listen();
 		TCPsock s = sk.accept();
@@ -13,7 +13,10 @@ int main() {
 	catch (WSError &e) {
 		std::cerr << e.what() << std::endl;
 	}
-	std::cout << "Нажмите Enter";
-	std::getchar();
+	catch (...) {
+		throw;
+	}
+	std::cout << "Нажмите Enter\n";
+	_getwch();
 	return 0;
 }

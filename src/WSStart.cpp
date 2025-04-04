@@ -1,4 +1,4 @@
-#include "WSStart.hpp"
+#include <WSStart.hpp>
 
 WSStart::WSStart(int major, int minor) {
 	SetConsoleOutputCP(CP_UTF8);

@@ -1,4 +1,4 @@
-#include "Socket.hpp"
+#include <Socket.hpp>
 
 Socket::Socket() {
 	ZeroMemory(this, sizeof(Socket));
@@ -18,6 +18,19 @@ void Socket::setInfo(std::string hoststr, std::string port, int type, int af) {
 	memcpy(&sinfo, result, sizeof(*result));
 	memcpy(&saddr, sinfo.ai_addr, sizeof(sinfo.ai_addr));
 	sinfo.ai_addr = &saddr;
+	freeaddrinfo(result);
+#ifdef WSDEBUG
+	getInfo();
+#endif
+}
+
+void Socket::getInfo() {
+	char IP[INET6_ADDRSTRLEN];
+	if (inet_ntop(sinfo.ai_family, reinterpret_cast<char *>(sinfo.ai_addr) + 4,
+				  IP, INET6_ADDRSTRLEN) != nullptr) {
+		std::cout << "IP " << IP << std::endl
+			<< "Port " << ntohs(*reinterpret_cast<u_short*>(reinterpret_cast<char *>(sinfo.ai_addr) + 2)) << std::endl;
+	}
 }
 
 Socket::Socket(std::string hoststr, std::string port, int type, int af) :

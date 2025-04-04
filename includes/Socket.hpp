@@ -1,5 +1,5 @@
 #pragma once
-#include "WSStart.hpp"
+#include <WSStart.hpp>
 #include <WS2tcpip.h>
 
 //Базовый класс сокетов, от которого следует наследоваться
@@ -10,6 +10,7 @@ protected:
 	sockaddr saddr;
 	Socket();
 	void setInfo(std::string hoststr, std::string port, int type, int af);
+	void getInfo();
 public:
 	Socket(std::string hoststr, std::string port, int type, int af);
 	~Socket() noexcept;
