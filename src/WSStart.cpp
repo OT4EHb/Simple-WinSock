@@ -2,6 +2,7 @@
 
 WSStart::WSStart(int major, int minor) {
 	SetConsoleOutputCP(CP_UTF8);
+	SetConsoleCP(CP_UTF8);
 	if (WSAStartup(MAKEWORD(major, minor), &ws)) {
 		throw WSError("Ошибка при инизиализации библиотеки");
 	}
