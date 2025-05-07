@@ -20,7 +20,7 @@ TCPsock TCPsock::accept() {
 #ifdef WSDEBUG
 	std::cout << "Подключен клиент:\n";
 	std::string ip;
-	u_short port = getInfo(ip);
+	u_short port = sk.getInfo(ip);
 	std::cout << "IP: " << ip << '\n'
 		<< "Port: " << port << std::endl;
 #endif
