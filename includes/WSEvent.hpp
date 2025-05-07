@@ -20,4 +20,8 @@ public:
 		if (result == WSA_WAIT_FAILED) throw WSError("Ошибка ожидания события");
 		return result;
 	}
+	void reset() const {
+		if (WSAResetEvent(event))return;
+		throw WSError("Ошибка при сбросе события");
+	}
 };
