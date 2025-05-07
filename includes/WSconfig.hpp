@@ -1,5 +1,7 @@
 #pragma once
 
-//#define WSDEBUG
+#define WSDEBUG
+#ifdef WSDEBUG
+#include <iostream>
+#endif // WSDEBUG
 typedef unsigned size_pack;
-//constexpr unsigned long long timeout = 10; //Секунды

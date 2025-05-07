@@ -4,7 +4,9 @@ void TCPsock::listen(int backlog) {
 	if (::listen(sock, backlog)) {
 		throw WSError("Ошибка при прослушивании");
 	}
+#ifdef WSDEBUG
 	std::cout << "Слушаем...\n";
+#endif
 }
 
 TCPsock TCPsock::accept() {
@@ -15,8 +17,13 @@ TCPsock TCPsock::accept() {
 	if (sk.sock == INVALID_SOCKET) {
 		throw WSError("Ошибка при принятии клиента");
 	}
+#ifdef WSDEBUG
 	std::cout << "Подключен клиент:\n";
-	sk.getInfo();
+	std::string ip;
+	u_short port = getInfo(ip);
+	std::cout << "IP: " << ip << '\n'
+		<< "Port: " << port << std::endl;
+#endif
 	return sk;
 }
 

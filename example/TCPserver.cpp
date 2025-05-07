@@ -1,4 +1,5 @@
 #include <TCPsock.hpp>
+#include <iostream>
 
 int main() {
 	try {
@@ -6,6 +7,15 @@ int main() {
 		TCPsock sk{""};
 		sk.bind();
 		sk.listen();
+		WSEvent e{};
+		sk.setEvent(e, FD_ACCEPT);
+		size_t second{0};
+		while (true) {
+			if (e.wait() == WSA_WAIT_TIMEOUT) {
+				std::cout << "Ждём клиента уже " << (second += 3) << " секунд\n";
+			}
+			else break;
+		}
 		TCPsock s = sk.accept();
 		char buff[100]{"Вас ис дас\n"};
 		s.send(buff, 100);
