@@ -72,3 +72,16 @@ void Socket::setEvent(WSEvent & event, long flags) const {
 		throw WSError("Ошибка при установке события");
 	}
 }
+
+DWORD Socket::checkEvent(WSEvent &event) const {
+	DWORD result{0};
+	static WSANETWORKEVENTS netEvents{0};
+	if (WSAEnumNetworkEvents(sock, event.get(), &netEvents) == SOCKET_ERROR) {
+		throw WSError("Ошибка проверки события");
+	}
+	for (auto flag : {FD_READ_BIT, FD_WRITE_BIT, FD_OOB_BIT, FD_ACCEPT_BIT,
+		 FD_CONNECT_BIT, FD_CLOSE_BIT, FD_QOS_BIT, FD_QOS_BIT})
+		if (netEvents.lNetworkEvents & (1 << flag) &&
+			!netEvents.iErrorCode[flag])
+			result |= (1 << flag);
+}

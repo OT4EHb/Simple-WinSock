@@ -16,6 +16,9 @@ int main() {
 			}
 			else break;
 		}
+		if (sk.checkEvent(e) & FD_ACCEPT) {
+			std::cout << "Клиент пришёл\n";
+		}
 		TCPsock s = sk.accept();
 		char buff[100]{"Вас ис дас\n"};
 		s.send(buff, 100);

@@ -19,4 +19,5 @@ public:
 	Socket &operator=(const Socket &) = delete;
 	void bind() const;
 	void setEvent(WSEvent &, long) const;
+	DWORD checkEvent(WSEvent&) const;
 };

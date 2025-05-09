@@ -21,7 +21,7 @@ public:
 		return result;
 	}
 	void reset() const {
-		if (WSAResetEvent(event))return;
+		if (WSAResetEvent(event)) return;
 		throw WSError("Ошибка при сбросе события");
 	}
 };
