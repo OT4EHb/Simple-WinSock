@@ -7,8 +7,6 @@ protected:
 public:
 	TCPsock(std::string hoststr, std::string port = "80", int af = AF_INET) :
 		Socket(hoststr, port, SOCK_STREAM, af) {}
-	// Спорно
-	TCPsock(TCPsock &sk) :Socket(sk) {}
 	void listen(int backlog = SOMAXCONN);
 	TCPsock accept();
 	void connect();

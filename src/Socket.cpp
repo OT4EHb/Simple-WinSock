@@ -47,6 +47,7 @@ Socket::Socket(std::string hoststr, std::string port, int type, int af) :
 	std::cout << "Открытие сокета\n";
 #endif
 }
+
 Socket::~Socket() {
 	closesocket(sock);
 #ifdef WSDEBUG
@@ -54,7 +55,7 @@ Socket::~Socket() {
 #endif
 }
 
-Socket::Socket(Socket &sk)  {
+Socket::Socket(Socket &&sk)  {
 	memcpy(this, &sk, sizeof(Socket));
 	sinfo.ai_addr = &saddr;
 	sk.sock = INVALID_SOCKET;
