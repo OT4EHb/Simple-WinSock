@@ -9,9 +9,13 @@ private:
 	int error;
 	int : 32;
 public:
-	WSError(const std::string str) : error(WSAGetLastError()),
-		std::runtime_error(std::move(str + ", код " +
-									 std::to_string(error))) {}
+	WSError(std::string &&str) : 
+		std::runtime_error(
+			[this, &str] {
+				error = WSAGetLastError();
+				return(str + ", код " +
+					   std::to_string(error));
+			}()) {}
 	int getCode() const {
 		return error;
 	}
