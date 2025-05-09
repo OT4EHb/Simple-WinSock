@@ -55,7 +55,7 @@ Socket::~Socket() {
 #endif
 }
 
-Socket::Socket(Socket &&sk)  {
+Socket::Socket(Socket &&sk) noexcept {
 	memcpy(this, &sk, sizeof(Socket));
 	sinfo.ai_addr = &saddr;
 	sk.sock = INVALID_SOCKET;
