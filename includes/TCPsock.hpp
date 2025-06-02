@@ -5,7 +5,8 @@ class TCPsock : public Socket {
 protected:
 	TCPsock() :Socket() {}
 public:
-	TCPsock(std::string hoststr, std::string port = "80", int af = AF_INET) :
+	TCPsock(const std::string &hoststr, const std::string &port = "80",
+			int af = AF_INET) :
 		Socket(hoststr, port, SOCK_STREAM, af) {}
 	void listen(int backlog = SOMAXCONN);
 	TCPsock accept();

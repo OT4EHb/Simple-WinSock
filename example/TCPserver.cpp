@@ -10,9 +10,10 @@ int main() {
 		WSEvent e{};
 		sk.setEvent(e, FD_ACCEPT);
 		size_t second{0};
+		throw 1;
 		while (true) {
-			if (e.wait() == WSA_WAIT_TIMEOUT) {
-				std::cout << "Ждём клиента уже " << (second += 3) << " секунд\n";
+			if (e.wait(1000ul) == WSA_WAIT_TIMEOUT) {
+				std::cout << "Ждём клиента уже " << (second++) << " секунд\n";
 			}
 			else break;
 		}

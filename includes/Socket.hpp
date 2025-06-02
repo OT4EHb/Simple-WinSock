@@ -9,15 +9,15 @@ protected:
 	addrinfo sinfo;
 	sockaddr saddr;
 	Socket();
-	void setInfo(std::string hoststr, std::string port, int type, int af);
+	void setInfo(const std::string &hoststr, const std::string &port, int type, int af);
 	u_short getInfo(std::string &) const;
 public:
-	Socket(std::string hoststr, std::string port, int type, int af);
+	Socket(const std::string &hoststr, const std::string &port, int type, int af);
 	~Socket() noexcept;
 	Socket(Socket &) = delete;
 	Socket(Socket &&) noexcept;
 	Socket &operator=(const Socket &) = delete;
 	void bind() const;
 	void setEvent(WSEvent &, long) const;
-	DWORD checkEvent(WSEvent&) const;
+	DWORD checkEvent(WSEvent &) const;
 };

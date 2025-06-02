@@ -3,19 +3,18 @@
 
 class WSEvent {
 private:
-	static constexpr unsigned timeout{3000u};
 	WSAEVENT event;
 public:
-	WSEvent():event(WSACreateEvent()) {	}
+	WSEvent() :event(WSACreateEvent()) {}
 	~WSEvent() {
 		WSACloseEvent(event);
 	}
 	WSEvent(const WSEvent &) = delete;
 	WSEvent &operator=(const WSEvent &) = delete;
-	const WSAEVENT get() const{
+	const WSAEVENT get() const {
 		return event;
 	}
-	DWORD wait() const{
+	DWORD wait(DWORD timeout = 500ul) const {
 		DWORD result = WSAWaitForMultipleEvents(1, &event, TRUE, timeout, FALSE);
 		if (result == WSA_WAIT_FAILED) throw WSError("Ошибка ожидания события");
 		return result;

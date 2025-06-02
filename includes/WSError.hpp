@@ -9,7 +9,7 @@ private:
 	int error;
 	int : 32;
 public:
-	WSError(std::string &&str) : 
+	WSError(std::string &&str) :
 		std::runtime_error(
 			[this, &str] {
 				error = WSAGetLastError();

@@ -7,7 +7,7 @@ Socket::Socket() {
 	sinfo.ai_addrlen = sizeof(saddr);
 }
 
-void Socket::setInfo(std::string hoststr, std::string port, int type, int af) {
+void Socket::setInfo(const std::string &hoststr, const std::string &port, int type, int af) {
 	addrinfo hints, *result = nullptr;
 	ZeroMemory(&hints, sizeof(hints));
 	hints.ai_family = af;
@@ -21,13 +21,13 @@ void Socket::setInfo(std::string hoststr, std::string port, int type, int af) {
 	freeaddrinfo(result);
 #ifdef WSDEBUG
 	std::string ip;
-	u_short prt=getInfo(ip);
+	u_short prt = getInfo(ip);
 	std::cout << "IP: " << ip << '\n'
 		<< "Port: " << prt << std::endl;
 #endif
 }
 
-u_short Socket::getInfo(std::string& ip) const {
+u_short Socket::getInfo(std::string &ip) const {
 	char IP[INET6_ADDRSTRLEN];
 	if (inet_ntop(sinfo.ai_family, reinterpret_cast<char *>(sinfo.ai_addr) + 4,
 				  IP, INET6_ADDRSTRLEN) != nullptr) {
@@ -37,12 +37,12 @@ u_short Socket::getInfo(std::string& ip) const {
 	return 0;
 }
 
-Socket::Socket(std::string hoststr, std::string port, int type, int af) :
+Socket::Socket(const std::string &hoststr, const std::string &port, int type, int af) :
 	sock(socket(af, type, 0)) {
 	if (sock == INVALID_SOCKET) {
 		throw WSError("Ошибка при создании сокета");
 	}
-	setInfo(std::move(hoststr), std::move(port), type, af);
+	setInfo(hoststr, port, type, af);
 #ifdef WSDEBUG
 	std::cout << "Открытие сокета\n";
 #endif
@@ -67,8 +67,8 @@ void Socket::bind() const {
 	}
 }
 
-void Socket::setEvent(WSEvent & event, long flags) const {
-	if (WSAEventSelect(sock, event.get(), flags)==SOCKET_ERROR) {
+void Socket::setEvent(WSEvent &event, long flags) const {
+	if (WSAEventSelect(sock, event.get(), flags) == SOCKET_ERROR) {
 		throw WSError("Ошибка при установке события");
 	}
 }
